@@ -1,0 +1,1 @@
+To import the getzero() function from getzero.py into another_script.py located in a subdirectory of the main directory, you need to adjust the import statement based on Python's module search path. Here's how you can do it

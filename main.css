@@ -1,0 +1,146 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+.font1 {
+	font-family: "Open Sans", sans-serif;
+	font-optical-sizing: auto;
+	/* font-weight: ; */
+	font-style: normal;
+	font-variation-settings: "wdth" 100;
+}
+.background {
+	background: linear-gradient(
+		45deg,
+		#050609 0%,
+		#2e1a43 80%,
+		#5d2660 85%,
+		#c25a72 100%
+	);
+	height: 100vh;
+	backdrop-filter: blur(100px);
+	background-attachment: fixed;
+}
+.header {
+	color: #fff;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.header > div > span {
+	padding: 20px;
+}
+.btn {
+	cursor: pointer;
+}
+.hashTitle {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+.checkHashContentBox {
+	display: flex;
+	align-items: center;
+}
+.checkHashBtn {
+	--btnColor: #e444ff;
+	border: 2px solid var(--btnColor);
+	border-radius: 10px;
+	padding: 5px 10px;
+	margin: 0 0 0 10px;
+	transition: all 300ms ease-in-out;
+}
+.hashContent {
+	word-wrap: break-word;
+	width: 100%;
+	padding: 10px;
+	border: none;
+	border-radius: 10px;
+}
+.outerBody {
+	/* height: 100vh; */
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+	margin: 0 20px;
+}
+.mainBody {
+	background-color: #f5f5f5;
+	border-radius: 30px;
+	width: 100%;
+	padding: 50px;
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	max-width: 800px;
+	margin: 5px;
+}
+.hashMismatch {
+	background-color: rgba(255, 0, 0, 0.23) !important;
+}
+.hashMatch {
+	background-color: rgba(0, 128, 0, 0.31) !important;
+}
+.optionBar {
+	background-color: #f5f5f5;
+	border-radius: 30px;
+	width: 100%;
+	padding: 20px;
+	display: flex;
+	align-items: center;
+	max-width: 800px;
+	margin: 5px;
+	overflow: hidden;
+}
+.outputBox {
+	background-color: #f5f5f5;
+	border-radius: 30px;
+	width: 100%;
+	padding: 20px;
+	max-width: 800px;
+	margin: 5px;
+	overflow: hidden;
+}
+.disableDiv {
+	filter: opacity(0.5);
+	cursor: not-allowed;
+}
+.hideBox {
+	border-radius: 30px;
+	width: 100%;
+	position: absolute;
+	background: transparent;
+	height: 100%;
+	left: 0;
+}
+.uploadBox {
+	cursor: pointer;
+	border: 5px dashed;
+	border-radius: 50px;
+	padding: 50px;
+}
+.upload-icon {
+	font-size: 100px;
+}
+.fileName {
+	font-size: 20px;
+}
+.optBtn {
+	--btnColor: #e444ff;
+	border: 2px solid var(--btnColor);
+	border-radius: 15px;
+	padding: 10px;
+	cursor: pointer;
+	margin: 0 5px;
+	transition: all 300ms ease-in-out;
+}
+.enableBtn {
+	background-color: var(--btnColor);
+	color: #fff;
+}
+.outputBox > div > code {
+	word-wrap: break-word;
+}
