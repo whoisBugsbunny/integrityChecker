@@ -42,8 +42,10 @@ uploadHash.addEventListener('click', () => {
     hashFile.click();
 })
 
+let orignalFileName = '';
 actualBox.addEventListener('change', () => {
     console.log(actualBox.files[0]);
+    orignalFileName = actualBox.files[0].name;
     fileName.innerHTML = "File Name: " + actualBox.files[0].name + "</br>Type: " + actualBox.files[0].type + "</br>Size: " + actualBox.files[0].size + "bytes";
     optionBar.classList.remove('disableDiv');
     hideBox[0].style.display = 'none';
@@ -90,7 +92,15 @@ optBtn[1].addEventListener('click', () => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const text = e.target.result;
-            hashContent.innerHTML = genrateHash(text);
+
+            // problem with this hash is that it is to lengthy
+            // const hash1 = genrateHash(reverseString(genrateHash(text)));
+            const hash2 = decreaseTheSize(genrateHash(text));
+            const hash = tohexa(hash2);
+            // console.log(hash);
+
+            // const hash = genrateHash(text);
+            hashContent.innerHTML = hash;
         };
         reader.readAsText(actualBox.files[0]);
     }
@@ -112,7 +122,12 @@ checkHashBtn.addEventListener('click', () => {
     const reader = new FileReader();
     reader.onload = (e) => {
         const text = e.target.result;
-        const hash = genrateHash(text);
+        // const hash = genrateHash(text);
+
+        // problem with this hash is that it is to lengthy
+        const hash1 = genrateHash(text);
+        const hash = decreaseTheSize(hash1);
+
         generatedHashTxt = hash;
         showDataDiv.classList.remove('hashMatch', 'hashMismatch');
         if (hash === hContent) {
@@ -128,7 +143,8 @@ checkHashBtn.addEventListener('click', () => {
     reader.readAsText(actualBox.files[0]);
 })
 
-// my hash code and function
+// main code
+// my hash code and helper function
 
 function getUnder128(num) {
     if (num < 128) {
@@ -152,6 +168,10 @@ function getZero(hexVal) {
     return hexVal;
 }
 
+function reverseString(str) {
+    return str.split('').reverse().join('');
+}
+
 function genrateHash(msg) {
     let secret1 = '';
     const length = msg.length;
@@ -159,15 +179,39 @@ function genrateHash(msg) {
 
     for (let i = 0; i < length; i++) {
         const charCode = msg.charCodeAt(length - i - 1);
-        tRes *= charCode;
+        // tRes *= charCode;
+        tRes ^= charCode;
         const cleanedHex1 = getZero(getUnder128(tRes).toString(16));
         tRes = getUnder128(tRes);
-        console.log(tRes, cleanedHex1);
+        // console.log(msg[i], charCode, tRes, cleanedHex1);
         secret1 += cleanedHex1;
     }
 
     return secret1;
 }
+
+function decreaseTheSize(hash) {
+    hash = String(hash);
+    if (hash.length <= 1024) {
+        // console.log(hash, hash.length);
+        return hash; // Return the hash directly if it's within the desired length
+    }
+    let newHash = '';
+    for (let i = 0, j = hash.length - 1; i < j; i++, j--) {
+        newHash += hash[i] ^ hash[j];
+    }
+    return decreaseTheSize(newHash); // Return the result of the recursive call
+}
+
+function tohexa(str) {
+    let hex = '';
+    for (let i = 0; i < str.length; i += 3) {
+        hex += parseInt(str.slice(i, i + 2), 10).toString(16);
+    }
+    return hex;
+}
+
+// end of main code
 
 function startDownload(text, type, filename) {
     const blob = new Blob([text], { type });
@@ -179,7 +223,7 @@ function startDownload(text, type, filename) {
 }
 
 downloadHash.addEventListener('click', () => {
-    startDownload(hashContent.textContent, "text/plain", "HashOfTheFile.txt");
+    startDownload(hashContent.textContent, "text/plain", "HashOf_" + orignalFileName);
 })
 
 function resetOutputDiv() {
@@ -187,6 +231,8 @@ function resetOutputDiv() {
     uploadBox.classList.remove('uploadBoxShrink');
     hashContent.innerText = "Not Generated";
     dataContent.innerText = "Hidden";
+    genarateBox.classList.add('hidden');
+    checkHash.classList.add('hidden');
     EnabledOpt1 = true;
     EnabledOpt2 = true;
     EnabledOpt3 = true;
@@ -202,6 +248,7 @@ compareHashBtn.addEventListener('click', () => {
     const upTxt = uploadedHashTxt.trim();
     const genTxt = generatedHashTxt.trim();
     const minLen = Math.min(upTxt.length, genTxt.length);
+    const maxLen = Math.max(upTxt.length, genTxt.length);
 
     let upComparedText = '';
     let genComparedText = '';
@@ -209,6 +256,19 @@ compareHashBtn.addEventListener('click', () => {
         const color = upTxt[i] === genTxt[i] ? 'greenCol' : 'redCol';
         upComparedText += `<span class="${color}">${upTxt[i]}</span>`;
         genComparedText += `<span class="${color}">${genTxt[i]}</span>`;
+    }
+
+    if (maxLen == upTxt.length) {
+        for (let i = minLen; i < maxLen; i++) {
+            upComparedText += `<span class="redCol">${upTxt[i]}</span>`;
+            // genComparedText += `<span class="redCol">-</span>`;
+        }
+
+    } else {
+        for (let i = minLen; i < maxLen; i++) {
+            // upComparedText += `<span class="redCol">-</span>`;
+            genComparedText += `<span class="redCol">${genTxt[i]}</span>`;
+        }
     }
 
     uploadedHash.innerHTML = upComparedText;
