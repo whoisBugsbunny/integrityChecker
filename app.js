@@ -12,6 +12,27 @@ const checkHashContent = document.getElementById('checkHashContent');
 const hashFile = document.getElementById('hashFile');
 const uploadHash = document.getElementById('uploadHash');
 const showDataDiv = document.getElementById('showData');
+const genarateBox = document.getElementById('genarateBox');
+const checkHash = document.getElementById('checkHash');
+const outputMessageBox = document.getElementById('outputMessageBox');
+const outputMessage = document.getElementById('outputMessage');
+const compareHashBox = document.getElementById('compareHashBox');
+const closeHashBox = document.getElementById('closeHashBox');
+const compareHashBtn = document.getElementById('compareHash');
+const uploadedHash = document.getElementById('uploadedHash');
+const generatedHash = document.getElementById('generatedHash');
+let uploadedHashTxt, generatedHashTxt;
+const aboutBox = document.getElementById('aboutBox');
+const openAboutBox = document.getElementById('openAboutBox');
+const closeAboutBox = document.getElementById('closeAboutBox');
+
+openAboutBox.addEventListener('click', () => {
+    aboutBox.classList.remove('hidden');
+})
+
+closeAboutBox.addEventListener('click', () => {
+    aboutBox.classList.add('hidden');
+})
 
 uploadBox.addEventListener('click', () => {
     actualBox.click();
@@ -62,6 +83,9 @@ optBtn[0].addEventListener('click', () => {
 
 let EnabledOpt2 = true;
 optBtn[1].addEventListener('click', () => {
+    genarateBox.classList.toggle('hidden');
+    checkHash.classList.add('hidden');
+    optBtn[2].classList.remove('enableBtn');
     if (EnabledOpt2) {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -69,8 +93,6 @@ optBtn[1].addEventListener('click', () => {
             hashContent.innerHTML = genrateHash(text);
         };
         reader.readAsText(actualBox.files[0]);
-    } else {
-        hashContent.innerText = "Not Generated";
     }
     EnabledOpt2 = !EnabledOpt2;
 })
@@ -78,31 +100,30 @@ optBtn[1].addEventListener('click', () => {
 let EnabledOpt3 = true;
 optBtn[2].addEventListener('click', () => {
 
-    // if (EnabledOpt3) {
-    //     const reader = new FileReader();
-    //     reader.onload = (e) => {
-    //         const text = e.target.result;
-    //         dataContent.innerHTML = text;
-    //     };
-    // reader.readAsText(actualBox.files[0]);
-    // } else {
-    // dataContent.innerText = "Hidden";
-    // }
+    checkHash.classList.toggle('hidden');
+    genarateBox.classList.add('hidden');
+    optBtn[1].classList.remove('enableBtn');
     EnabledOpt3 = !EnabledOpt3;
 })
 
 checkHashBtn.addEventListener('click', () => {
     const hContent = checkHashContent.value;
+    uploadedHashTxt = hContent;
     const reader = new FileReader();
     reader.onload = (e) => {
         const text = e.target.result;
         const hash = genrateHash(text);
+        generatedHashTxt = hash;
         showDataDiv.classList.remove('hashMatch', 'hashMismatch');
         if (hash === hContent) {
+            outputMessage.innerText = "The File is not tampered. ";
             showDataDiv.classList.add('hashMatch');
         } else {
+            outputMessage.innerText = "The File is tampered!!!! ";
             showDataDiv.classList.add('hashMismatch');
         }
+        uploadBox.classList.add('uploadBoxShrink');
+        outputMessageBox.classList.remove('hidden');
     };
     reader.readAsText(actualBox.files[0]);
 })
@@ -162,6 +183,8 @@ downloadHash.addEventListener('click', () => {
 })
 
 function resetOutputDiv() {
+    showDataDiv.classList.remove('hashMatch', 'hashMismatch');
+    uploadBox.classList.remove('uploadBoxShrink');
     hashContent.innerText = "Not Generated";
     dataContent.innerText = "Hidden";
     EnabledOpt1 = true;
@@ -171,3 +194,27 @@ function resetOutputDiv() {
         btn.classList.remove('enableBtn');
     })
 }
+
+// designing
+
+compareHashBtn.addEventListener('click', () => {
+    compareHashBox.classList.remove('hidden');
+    const upTxt = uploadedHashTxt.trim();
+    const genTxt = generatedHashTxt.trim();
+    const minLen = Math.min(upTxt.length, genTxt.length);
+
+    let upComparedText = '';
+    let genComparedText = '';
+    for (let i = 0; i < minLen; i++) {
+        const color = upTxt[i] === genTxt[i] ? 'greenCol' : 'redCol';
+        upComparedText += `<span class="${color}">${upTxt[i]}</span>`;
+        genComparedText += `<span class="${color}">${genTxt[i]}</span>`;
+    }
+
+    uploadedHash.innerHTML = upComparedText;
+    generatedHash.innerHTML = genComparedText;
+})
+
+closeHashBox.addEventListener('click', () => {
+    compareHashBox.classList.add('hidden');
+})

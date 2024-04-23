@@ -20,48 +20,107 @@
 </head>
 
 <body class="background font1">
+
+    <div id="compareHashBox" class="translucentBack font1 hidden">
+        <div class="compareHashBox">
+            <div id="closeHashBox" class="closeHashBox">
+                <span class="material-symbols-rounded">close</span>
+            </div>
+            <h3>Hash Comparison</h3>
+            <div class="sideBySide m-r-8px">
+                <div class="sideHashBox sideLeft">
+                    <h3>Uploaded Hash</h3>
+                </div>
+                <div class="sideHashBox sideRight">
+                    <h3>Generated Hash</h3>
+                </div>
+            </div>
+            <div class="sideBySide codeBox f-s-16px">
+                <div class="sideHashBox sideLeft">
+                    <code id="uploadedHash">uploaded</code>
+                </div>
+                <div class="sideHashBox sideRight">
+                    <code id="generatedHash">genarated</code>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="aboutBox" class="aboutBox hidden">
+        <div class="aboutBoxContent">
+            <div id="closeAboutBox" class="closeAboutBox">
+                <span class="material-symbols-rounded">close</span>
+            </div>
+            <h3>About</h3>
+            <p>
+                This is a simple web app that can be used to check the integrity of a file. You can upload a file and
+                generate a hash for it. You can also check the integrity of a file by comparing the hash of the file
+                with the hash you have generated.
+            </p>
+            <ul>
+                <li>It is open source project.</li>
+                <li>It does not include any server side processing so no data is shared across network.</li>
+                <li>You can also upload generated hash in public domain to store the hashed file as orignal data can not be regenerated.</li>
+            </ul>
+            <p>
+                This app is created for educational purposes. You can find the source code of this app on <a target="_blank" href="https://github.com/whoisBugsbunny/integrityChecker">GitHub</a>.
+            </p>
+        </div>
+    </div>
+
     <div class="header">
         <h1>∫ Integrity Checker</h1>
-        <div>
-            <span>GitRepo</span>
-            <span>About</span>
+        <div class="navbtns">
+            <span><a target="_blank" href="https://github.com/whoisBugsbunny/integrityChecker">GitRepo</a></span>
+            <span>
+                <span id="openAboutBox" class="aboutBtn btn">About</span>
+            </span>
         </div>
     </div>
     <div class="outerBody">
-        <div class="mainBody">
-            <div>
-                <div id="fileName" class="fileName">Drop or Choose the file you want to upload.</div>
-            </div>
-            <div>
-                <input style="display: none;" type="file" id="file" name="file" accept=".txt" onchange="">
-                <div id="uploadBox" class="uploadBox">
-                    <span class="upload-icon material-symbols-rounded">upload</span>
+        <div class="mainBody" id="showData">
+            <div class="mainBodyUp">
+                <div>
+                    <div id="fileName" class="fileName">Drop or Choose the file you want to upload.</div>
                 </div>
+                <div>
+                    <input style="display: none;" type="file" id="file" name="file" accept=".txt" onchange="">
+                    <div id="uploadBox" class="uploadBox">
+                        <span class="upload-icon material-symbols-rounded">upload</span>
+                    </div>
+                </div>
+            </div>
+            <div id="outputMessageBox" class="outputMessageBox hidden">
+                <p id="outputMessage"></p>
+                <div class="outputMessageBtn" id="compareHash">See The Hash</div>
             </div>
         </div>
         <div class="optionBar disableDiv" id="optionBar">
             <div class="optBtn" name="optBtn" data-index="0">Show Data</div>
-            <div class="optBtn" name="optBtn" data-index="1">Genarate Public Cipher</div>
+            <div class="optBtn" name="optBtn" data-index="1">Genarate Hash</div>
             <div class="optBtn" name="optBtn" data-index="2">Check Integrity</div>
 
             <div class="hideBox" name="hideBox"></div>
         </div>
 
-        <div class="outputBox" id="showData">
-            <div class="checkHashBox">
+        <div class="outputBox">
+            <div id="checkHash" class="checkHashBox hidden">
                 <input style="display: none;" type="file" id="hashFile" name="file" accept=".txt" onchange="">
 
-                <h3 class="hashTitle"><span>Enter Public Cipher</span> <span id="uploadHash" class="btn material-symbols-rounded">upload</span></h3>
+                <h3 class="hashTitle"><span>Enter Hash</span> <span id="uploadHash" class="btn material-symbols-rounded">upload</span></h3>
                 <div class="checkHashContentBox">
-                    <input class="hashContent" id="checkHashContent" type="text" placeholder="Enter Your Public Cipher">
+                    <input class="hashContent" id="checkHashContent" type="text" placeholder="Enter Your Hash">
                     <div id="checkHashBtn" class="btn checkHashBtn">Check</div>
                 </div>
+                <br>
+                <hr />
             </div>
-            <div class="hashBox">
-                <h3 class="hashTitle"><span>Public Cipher</span> <span id="downloadHash" class="btn material-symbols-rounded">download</span></h3>
+            <div id="genarateBox" class="hashBox hidden">
+                <h3 class="hashTitle"><span>Hash</span> <span id="downloadHash" class="btn material-symbols-rounded">download</span></h3>
                 <code class="hashContent" id="hashContent">Not Generated</code>
+                <br>
+                <hr />
             </div>
-            <hr />
             <div class="dataBox">
                 <h3 class="dataTitle">Data</h3>
                 <code class="dataContent" id="dataContent">Hidden</code>

@@ -3,6 +3,18 @@
 	padding: 0;
 	box-sizing: border-box;
 }
+::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-thumb {
+	width: 8px;
+	height: 8px;
+}
+::-webkit-scrollbar-thumb {
+	background: #888;
+	border-radius: 8px;
+}
 .font1 {
 	font-family: "Open Sans", sans-serif;
 	font-optical-sizing: auto;
@@ -22,12 +34,22 @@
 	backdrop-filter: blur(100px);
 	background-attachment: fixed;
 }
+.m-r-8px {
+	margin-right: 8px;
+}
+.f-s-16px {
+	font-size: 16px;
+}
 .header {
 	color: #fff;
 	padding: 20px;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+}
+.navbtns > span > a {
+	text-decoration: none;
+	color: #fff;
 }
 .header > div > span {
 	padding: 20px;
@@ -73,17 +95,34 @@
 	width: 100%;
 	padding: 50px;
 	display: flex;
+	flex-direction: column;
 	justify-content: space-evenly;
 	align-items: center;
 	max-width: 800px;
 	margin: 5px;
+	transition: all 300ms ease-in-out;
+}
+.mainBodyUp {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	width: 100%;
 }
 .hashMismatch {
-	background-color: rgba(255, 0, 0, 0.23) !important;
+	background-color: #b21e2b !important;
+	color: #f5f5f5;
 }
 .hashMatch {
-	background-color: rgba(0, 128, 0, 0.31) !important;
+	background-color: #006f3c !important;
+	color: #f5f5f5;
 }
+.redCol {
+	background-color: #d93d4b;
+}
+.greenCol {
+	background-color: #13a562;
+}
+
 .optionBar {
 	background-color: #f5f5f5;
 	border-radius: 30px;
@@ -121,9 +160,30 @@
 	border: 5px dashed;
 	border-radius: 50px;
 	padding: 50px;
+	transition: all 200ms ease-in-out;
+}
+.uploadBoxShrink {
+	padding: 25px;
 }
 .upload-icon {
 	font-size: 100px;
+}
+.outputMessageBox {
+	width: 100%;
+	padding: 40px 0 0 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.outputMessageBox > p {
+	font-size: 25px;
+}
+.outputMessageBtn {
+	cursor: pointer;
+	border: 2px solid #f5f5f5;
+	border-radius: 20px;
+	padding: 5px 10px;
+	margin: 0 5px;
 }
 .fileName {
 	font-size: 20px;
@@ -135,7 +195,7 @@
 	padding: 10px;
 	cursor: pointer;
 	margin: 0 5px;
-	transition: all 300ms ease-in-out;
+	transition: all 200ms ease-in-out;
 }
 .enableBtn {
 	background-color: var(--btnColor);
@@ -143,4 +203,104 @@
 }
 .outputBox > div > code {
 	word-wrap: break-word;
+}
+.hidden {
+	display: none !important;
+}
+
+.translucentBack {
+	backdrop-filter: blur(10px);
+	background: #0000008b;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 50px;
+}
+.compareHashBox {
+	border-radius: 30px;
+	background: #f5f5f5;
+	width: 100%;
+	height: 100%;
+	max-width: 800px;
+	padding: 20px;
+	margin: 50px;
+	display: flex;
+	flex-direction: column;
+	position: relative;
+}
+.compareHashBox > h3 {
+	text-align: center;
+	padding-bottom: 20px;
+}
+.sideBySide {
+	display: flex;
+	justify-content: space-around;
+}
+.codeBox {
+	width: 100%;
+	height: 100%;
+	padding: 10px;
+	border: none;
+	/* border-radius: 10px; */
+	background-color: #dddddd;
+	overflow: scroll;
+	overflow-x: hidden;
+	/* font-size: 40px; */
+}
+.sideHashBox {
+	padding: 5px;
+	width: 50%;
+	text-align: center;
+	height: fit-content;
+}
+.sideHashBox > code {
+	word-wrap: break-word;
+}
+.sideLeft {
+	border-right: 1px solid #000;
+}
+.sideRight {
+	border-left: 1px solid #000;
+}
+.closeHashBox {
+	cursor: pointer;
+	position: absolute;
+	top: 20px;
+	right: 20px;
+}
+
+/* about */
+
+.aboutBox {
+	position: absolute;
+	top: 0;
+	/* left: 10%; */
+	background: #f5f5f5;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	z-index: 100;
+}
+.aboutBoxContent {
+	padding: 20px;
+}
+.aboutBoxContent > h3 {
+	text-align: center;
+	padding-bottom: 20px;
+}
+.aboutBoxContent > p {
+	padding: 10px 0;
+}
+.closeAboutBox {
+	cursor: pointer;
+	position: absolute;
+	top: 20px;
+	right: 20px;
 }
