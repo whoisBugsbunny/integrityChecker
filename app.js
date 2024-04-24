@@ -1,3 +1,4 @@
+const background = document.getElementById('background');
 const actualBox = document.getElementById('file');
 const uploadBox = document.getElementById('uploadBox');
 const fileName = document.getElementById('fileName');
@@ -28,10 +29,12 @@ const closeAboutBox = document.getElementById('closeAboutBox');
 
 openAboutBox.addEventListener('click', () => {
     aboutBox.classList.remove('hidden');
+    background.classList.add('over-hide');
 })
 
 closeAboutBox.addEventListener('click', () => {
     aboutBox.classList.add('hidden');
+    background.classList.remove('over-hide');
 })
 
 uploadBox.addEventListener('click', () => {
@@ -126,7 +129,7 @@ checkHashBtn.addEventListener('click', () => {
 
         // problem with this hash is that it is to lengthy
         const hash1 = genrateHash(text);
-        const hash = decreaseTheSize(hash1);
+        const hash = tohexa(decreaseTheSize(hash1));
 
         generatedHashTxt = hash;
         showDataDiv.classList.remove('hashMatch', 'hashMismatch');
@@ -229,6 +232,7 @@ downloadHash.addEventListener('click', () => {
 function resetOutputDiv() {
     showDataDiv.classList.remove('hashMatch', 'hashMismatch');
     uploadBox.classList.remove('uploadBoxShrink');
+    outputMessageBox.classList.add('hidden');
     hashContent.innerText = "Not Generated";
     dataContent.innerText = "Hidden";
     genarateBox.classList.add('hidden');
